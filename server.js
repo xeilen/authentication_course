@@ -16,12 +16,17 @@ app.get('/', (req, res) => {
   })
 })
 
-app.get('/dashboard', (req, res) => {
-  res.json({
-    events: events
+app.get('/dashboard', verifyToken, (req, res) => {
+  jwt.verify(req.token, 'the_secret_key', err => {
+    if (err) {
+      res.sendStatus(401)
+    } else {
+      res.json({
+        events: events
+      })
+    }
   })
 })
-
 app.post('/register', (req, res) => {
   if (req.body) {
     const user = {
@@ -78,7 +83,7 @@ app.post('/login', (req, res) => {
 
 // MIDDLEWARE
 function verifyToken (req, res, next) {
-  const bearerHeader = req.headers['authorization']
+  const bearerHeader = req.headers['Authorization']
 
   if (typeof bearerHeader !== 'undefined') {
     const bearer = bearerHeader.split(' ')
