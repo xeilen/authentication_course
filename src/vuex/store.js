@@ -27,9 +27,9 @@ export default new Vuex.Store({
       })
     },
     login ({ commit }, credential) {
-      return axios.post('//localhost:3000/login', credential).then(({ data }) => {
-        console.log('user login data is: ', data)
-        commit('SET_USER_DATA', data)
+      return axios.post('//localhost:3000/login', credential).then((response) => {
+        console.log('user login data is: ', response.data)
+        commit('SET_USER_DATA', response.data)
       })
     },
     logout ({ commit }) {

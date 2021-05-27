@@ -33,6 +33,8 @@ export default {
         this.$router.push({
           name: 'dashboard'
         })
+      }).catch(err => {
+        console.log(err)
       })
     }
   }
